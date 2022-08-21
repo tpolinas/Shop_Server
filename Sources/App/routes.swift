@@ -290,4 +290,54 @@ func routes(_ app: Application) throws {
         let mockAuth = Auth(username: "", password: password)
         return mockAuth
     }
+    
+    // MARK: - Reviews
+    
+    app.get("dummyReviews") { request -> ReviewsList in
+        let mockReviewsList = ReviewsList(list: [
+            Reviews.init(message: "review"), Reviews.init(message: "review"), Reviews.init(message: "review"), Reviews.init(message: "review"), Reviews.init(message: "review")
+        ])
+        return mockReviewsList
+    }
+    
+    app.get("message", ":stringValue") { request -> ReviewsList in
+        guard let message = request.parameters.get("stringValue", as: Reviews.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockReviewsList = ReviewsList(list: [message])
+        return mockReviewsList
+    }
+    
+    // MARK: - Add Review
+    
+    app.get("dummyAddReview.json") { request -> AddReview in
+        let mockReview = AddReview(message: "")
+        return mockReview
+    }
+    
+    app.get("message", ":stringValue") { request -> AddReview in
+        guard let message = request.parameters.get("stringValue", as: String.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockReview = AddReview(message: message)
+        return mockReview
+    }
+    
+    // MARK: - Remove Review
+    
+    app.get("dummyRemoveReview.json") { request -> RemoveReview in
+        let mockReview = RemoveReview(result: 1)
+        return mockReview
+    }
+    
+    app.get("result", ":numericValue") { request -> RemoveReview in
+        guard let result = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockReview = RemoveReview(result: result)
+        return mockReview
+    }
 }
