@@ -1,4 +1,5 @@
 import Vapor
+import Fluent
 
 func routes(_ app: Application) throws {
     app.get { req async in
@@ -15,6 +16,7 @@ func routes(_ app: Application) throws {
         let mockUser = User(id: 123456, login: "login", name: "name", lastname: "last name")
         return mockUser
     }
+    
     app.get("id_user", ":numericValue") { request -> User in
         guard let userId = request.parameters.get("numericValue", as: Int.self) else {
             throw Abort(.badRequest)
@@ -340,4 +342,268 @@ func routes(_ app: Application) throws {
         let mockReview = RemoveReview(result: result)
         return mockReview
     }
+    
+    // MARK: - Cart
+    
+    app.get("dummyCart") { request -> Cart in
+        let mockCart = Cart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0,
+            bill: 0
+        )
+        return mockCart
+    }
+    
+    app.get("item", ":stringValue") { request -> Cart in
+        guard let name = request.parameters.get("stringValue", as: String.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockCart = Cart(
+            item: Product.init(
+                result: 1,
+                productName: name,
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0,
+            bill: 0
+        )
+        return mockCart
+    }
+    
+    app.get("price", ":numericValue") { request -> Cart in
+        guard let price = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockCart = Cart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: price,
+                productDescription: ""
+            ),
+            amount: 0,
+            bill: 0
+        )
+        return mockCart
+    }
+    
+    app.get("amount", ":numericValue") { request -> Cart in
+        guard let amount = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockCart = Cart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: amount,
+            bill: 0
+        )
+        return mockCart
+    }
+    
+    app.get("bill", ":numericValue") { request -> Cart in
+        guard let bill = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockCart = Cart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0,
+            bill: bill
+        )
+        return mockCart
+    }
+    
+
+    // MARK: - AddToCart
+    
+    app.get("dummyAddToCart.json") { request -> AddToCart in
+        let mockAddToCart = AddToCart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0
+        )
+        return mockAddToCart
+    }
+    
+    app.get("item", ":stringValue") { request -> AddToCart in
+        guard let name = request.parameters.get("stringValue", as: String.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockAddToCart = AddToCart(
+            item: Product.init(
+                result: 1,
+                productName: name,
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0
+        )
+        return mockAddToCart
+    }
+    
+    app.get("price", ":numericValue") { request -> AddToCart in
+        guard let price = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockAddToCart = AddToCart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: price,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0
+        )
+        return mockAddToCart
+    }
+    
+    app.get("amount", ":numericValue") { request -> AddToCart in
+        guard let amount = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockAddToCart = AddToCart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            price: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: amount
+        )
+        return mockAddToCart
+    }
+    
+    // MARK: - RemoveFromCart
+    
+    app.get("dummyRemoveFromCart.json") { request -> RemoveFromCart in
+        let mockRemoveFromCart = RemoveFromCart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0
+        )
+        return mockRemoveFromCart
+    }
+    
+    app.get("item", ":stringValue") { request -> RemoveFromCart in
+        guard let name = request.parameters.get("stringValue", as: String.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockRemoveFromCart = RemoveFromCart(
+            item: Product.init(
+                result: 1,
+                productName: name,
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: 0
+        )
+        return mockRemoveFromCart
+    }
+    
+    app.get("amount", ":numericValue") { request -> RemoveFromCart in
+        guard let amount = request.parameters.get("numericValue", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        
+        let mockRemoveFromCart = RemoveFromCart(
+            item: Product.init(
+                result: 1,
+                productName: "",
+                productPrice: 0,
+                productDescription: ""
+            ),
+            amount: amount
+        )
+        return mockRemoveFromCart
+    }
+    
+    // MARK: - Pay Method
+    
+    let payController = PayController()
+    app.post("make_payment", use: payController.pay)
+    
 }
