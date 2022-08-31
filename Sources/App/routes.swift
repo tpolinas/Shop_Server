@@ -604,6 +604,6 @@ func routes(_ app: Application) throws {
     // MARK: - Pay Method
     
     let payController = PayController()
-    app.post("make_payment", use: payController.pay)
+    app.post("payment", use: payController.pay(_:))
     
 }

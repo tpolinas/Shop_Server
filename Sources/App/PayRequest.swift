@@ -8,11 +8,11 @@
 import Vapor
 
  struct PayRequest: Content {
-     var products: [PayProduct]
+//     var products: [PayProduct]
      var user_id: Int
  }
 
- struct PayProduct: Content {
-     var productID: String?
-     var quantity: String?
- }
+// struct PayProduct: Content {
+//     var productID: String?
+//     var quantity: String?
+// }
